@@ -3,10 +3,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Grid2D {
-
-//    public static enum Tile {
-//        EMPTY, TRAVERSABLE, NON_TRAVERSABLE
-//    }
     
     /**
      * @param dimensions X is columns, Y is rows
