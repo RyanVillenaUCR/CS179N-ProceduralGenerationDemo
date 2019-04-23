@@ -30,7 +30,7 @@ public class Grid2D {
     @Override
     public String toString() {
         
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder((ROWS + 2) * (COLS + 2));
         
         // Top row border
         sb.append('*');
