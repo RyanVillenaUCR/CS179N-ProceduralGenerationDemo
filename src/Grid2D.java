@@ -28,7 +28,7 @@ public class Grid2D {
         for (int thisRow = 0; thisRow < ROWS; thisRow++) {
             for (int thisCol = 0; thisCol < COLS; thisCol++) {
                 
-                setTile(Tile.EMPTY, new Coord2D(thisCol, thisRow));
+                setTile(Tile.TileType.EMPTY, new Coord2D(thisCol, thisRow));
             }
         }
     }
@@ -54,7 +54,8 @@ public class Grid2D {
                 if (thisCol == 0)
                     sb.append('|');
                 
-                sb.append(tileToChar.get(grid[thisRow][thisCol]));
+                Tile thisTile = grid[thisRow][thisCol];
+                sb.append(tileToChar.get(thisTile.getType()));
                 
                 // Right border
                 if (thisCol == COLS - 1)
@@ -82,11 +83,11 @@ public class Grid2D {
      * @param t Type of tile to be set
      * @param location Desired location
      */
-    public void setTile(Tile t, Coord2D location) {
+    public void setTile(Tile.TileType t, Coord2D location) {
         
         assertBounds(location);
         
-        grid[location.getY()][location.getX()] = t;
+        grid[location.getY()][location.getX()] = new Tile(t);
     }
     
     public Tile getTile(Coord2D location) {
@@ -114,7 +115,7 @@ public class Grid2D {
     
     public char getChar(Coord2D location) {
         
-        return tileToChar.get(grid[location.getY()][location.getX()]);
+        return tileToChar.get(grid[location.getY()][location.getX()].getType());
     }
 
     public boolean canGoUp(Coord2D location) {
@@ -142,8 +143,8 @@ public class Grid2D {
     private final int COLS;
     private Tile[][] grid;
     
-    private Map<Character, Tile> charToTile;
-    private Map<Tile, Character> tileToChar;
+    private Map<Character, Tile.TileType> charToTile;
+    private Map<Tile.TileType, Character> tileToChar;
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private void initMaps() {
@@ -154,13 +155,13 @@ public class Grid2D {
         charToTile = new HashMap();
         tileToChar = new HashMap();
         
-        charToTile.put('.', Tile.EMPTY);
-        charToTile.put('t', Tile.TRAVERSABLE);
-        charToTile.put('N', Tile.NON_TRAVERSABLE);
+        charToTile.put('.', Tile.TileType.EMPTY);
+        charToTile.put('t', Tile.TileType.TRAVERSABLE);
+        charToTile.put('N', Tile.TileType.NON_TRAVERSABLE);
         
-        tileToChar.put(Tile.EMPTY, '.');
-        tileToChar.put(Tile.TRAVERSABLE, 't');
-        tileToChar.put(Tile.NON_TRAVERSABLE, 'N');
+        tileToChar.put(Tile.TileType.EMPTY, '.');
+        tileToChar.put(Tile.TileType.TRAVERSABLE, 't');
+        tileToChar.put(Tile.TileType.NON_TRAVERSABLE, 'N');
     }
     
 

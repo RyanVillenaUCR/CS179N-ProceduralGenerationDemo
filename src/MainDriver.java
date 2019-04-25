@@ -17,7 +17,7 @@ public class MainDriver {
         Coord2D failPoint      = new Coord2D(7, 14);
         
         Grid2D grid = new Grid2D(gridDimensions);
-        grid.setTile(Tile.TRAVERSABLE, testPoint);
+        grid.setTile(Tile.TileType.TRAVERSABLE, testPoint);
         
         System.out.println(grid.toString());
         System.out.println("Tile at " + testPoint.toString()  + ": " + grid.getTile(testPoint) );
@@ -26,8 +26,10 @@ public class MainDriver {
         
         // Test marks
         Coord2D markPoint = new Coord2D(5, 5);
+        Coord2D unmarkedPoint = new Coord2D(5, 4);
         grid.getTile(markPoint).setMark(true);
-        System.out.println("Just marked tile " + markPoint + ", should be true: " + grid.getTile(markPoint).isMarked());
+        System.out.println("Just marked tile " + markPoint + ", should be marked: " + grid.getTile(markPoint));
+        System.out.println("Testing unmarked tile " + unmarkedPoint + ", should not be marked: " + grid.getTile(unmarkedPoint));
         System.out.println(grid);
     }
     
