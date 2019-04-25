@@ -8,7 +8,7 @@
  */
 public class MainDriver {
 
-    public static void testEmptyGrid() {
+    public static void testGrid() {
         
         Coord2D gridDimensions = new Coord2D(7, 13);
         Coord2D testPoint      = new Coord2D(2, 10);
@@ -23,6 +23,12 @@ public class MainDriver {
         System.out.println("Tile at " + testPoint.toString()  + ": " + grid.getTile(testPoint) );
         System.out.println("Tile at " + emptyPoint.toString() + ": " + grid.getTile(emptyPoint));
 //        System.out.println("Tile at " + failPoint.toString()  + ": " + grid.getTile(failPoint));
+        
+        // Test marks
+        Coord2D markPoint = new Coord2D(5, 5);
+        grid.getTile(markPoint).setMark(true);
+        System.out.println("Just marked tile " + markPoint + ", should be true: " + grid.getTile(markPoint).isMarked());
+        System.out.println(grid);
     }
     
 	/**
@@ -32,7 +38,7 @@ public class MainDriver {
 		
 		System.out.println("Hello world!");
 
-		testEmptyGrid();
+		testGrid();
 	}
 
 }
