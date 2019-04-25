@@ -23,7 +23,7 @@ public class Grid2D {
         for (int thisRow = 0; thisRow < ROWS; thisRow++) {
             for (int thisCol = 0; thisCol < COLS; thisCol++) {
                 
-                setTile(Tile.EMPTY, thisRow, thisCol);
+                setTile(Tile.EMPTY, new Coord2D(thisCol, thisRow));
             }
         }
     }
@@ -72,17 +72,64 @@ public class Grid2D {
         return sb.toString();
     }
     
-    public void setTile(Tile t, int row, int col) {
+    /**
+     * 
+     * @param t Type of tile to be set
+     * @param location Desired location
+     */
+    public void setTile(Tile t, Coord2D location) {
         
-        assert 0 <= row && row < ROWS : " Invalid row " + Integer.toString(row);
-        assert 0 <= col && col < COLS : " Invalid col " + Integer.toString(col);
+        assertBounds(location);
         
-        grid[row][col] = t;
+        grid[location.getY()][location.getX()] = t;
     }
     
-    public char getChar(int row, int col) {
+    public Tile getTile(Coord2D location) {
         
-        return tileToChar.get(grid[row][col]);
+        assertBounds(location);
+        
+        return grid[location.getY()][location.getX()];
+    }
+    
+    public void assertBounds(Coord2D location) {
+        
+        assert checkBounds(location) : " Invalid coordinate " + location.toString();
+    }
+    
+    public boolean checkBounds(Coord2D location) {
+        
+        int x = location.getX();
+        int y = location.getY();
+        
+        // Make sure they aren't negative
+        if (x < 0 || y < 0) return false;
+        
+        return x < COLS && y < ROWS;
+    }
+    
+    public char getChar(Coord2D location) {
+        
+        return tileToChar.get(grid[location.getY()][location.getX()]);
+    }
+
+    public boolean canGoUp(Coord2D location) {
+        
+        return location.getY() > 0;
+    }
+    
+    public boolean canGoDown(Coord2D location) {
+        
+        return location.getY() < ROWS - 1;
+    }
+    
+    public boolean canGoLeft(Coord2D location) {
+        
+        return location.getX() > 0;
+    }
+    
+    public boolean canGoRight(Coord2D location) {
+        
+        return location.getX() < COLS - 1;
     }
     
     
