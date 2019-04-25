@@ -33,6 +33,21 @@ public class Tile {
         this.type = t.type;
     }
     
+    public char getChar() {
+        
+        switch (type) {
+            
+            case EMPTY:
+                return '.';
+            case TRAVERSABLE:
+                return 't';
+            case NON_TRAVERSABLE:
+                return 'N';
+            default:
+                return '?';
+        }
+    }
+    
     public boolean isMarked() {
         return marked;
     }

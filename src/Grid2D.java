@@ -1,7 +1,3 @@
-//import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Grid of Tile objects which can be accessed, changed, and printed.
  * @author Ryan Villena
@@ -20,8 +16,6 @@ public class Grid2D {
         
         ROWS = dimensions.getY();
         COLS = dimensions.getX();
-        
-        initMaps();
         
         grid = new Tile[ROWS][COLS];
         
@@ -55,7 +49,7 @@ public class Grid2D {
                     sb.append('|');
                 
                 Tile thisTile = grid[thisRow][thisCol];
-                sb.append(tileToChar.get(thisTile.getType()));
+                sb.append(thisTile.getChar());
                 
                 // Right border
                 if (thisCol == COLS - 1)
@@ -115,7 +109,7 @@ public class Grid2D {
     
     public char getChar(Coord2D location) {
         
-        return tileToChar.get(grid[location.getY()][location.getX()].getType());
+        return getTile(location).getChar();
     }
 
     public boolean canGoUp(Coord2D location) {
@@ -138,32 +132,37 @@ public class Grid2D {
         return location.getX() < COLS - 1;
     }
     
+    public Tile getUp(Coord2D fromHere) {
+        
+        if (!canGoUp(fromHere)) return null;
+        
+        return getTile(new Coord2D(fromHere.getX(), fromHere.getY() - 1));
+    }
+    
+    public Tile getDown(Coord2D fromHere) {
+        
+        if (!canGoDown(fromHere)) return null;
+        
+        return getTile(new Coord2D(fromHere.getX(), fromHere.getY() + 1));
+    }
+    
+    public Tile getLeft(Coord2D fromHere) {
+        
+        if (!canGoLeft(fromHere)) return null;
+        
+        return getTile(new Coord2D(fromHere.getX() - 1, fromHere.getY()));
+    }
+    
+    public Tile getRight(Coord2D fromHere) {
+        
+        if (!canGoRight(fromHere)) return null;
+        
+        return getTile(new Coord2D(fromHere.getX() + 1, fromHere.getY()));
+    }
     
     private final int ROWS;
     private final int COLS;
     private Tile[][] grid;
     
-    private Map<Character, Tile.TileType> charToTile;
-    private Map<Tile.TileType, Character> tileToChar;
-    
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    private void initMaps() {
-        
-//        charToTile = new EnumMap(Character.class);
-//        tileToChar = new EnumMap(Tile.class);
-        
-        charToTile = new HashMap();
-        tileToChar = new HashMap();
-        
-        charToTile.put('.', Tile.TileType.EMPTY);
-        charToTile.put('t', Tile.TileType.TRAVERSABLE);
-        charToTile.put('N', Tile.TileType.NON_TRAVERSABLE);
-        
-        tileToChar.put(Tile.TileType.EMPTY, '.');
-        tileToChar.put(Tile.TileType.TRAVERSABLE, 't');
-        tileToChar.put(Tile.TileType.NON_TRAVERSABLE, 'N');
-    }
-    
-
     
 }
