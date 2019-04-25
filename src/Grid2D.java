@@ -137,6 +137,9 @@ public class Grid2D {
     private final int COLS;
     private Tile[][] grid;
     
+    private Map<Character, Tile> charToTile;
+    private Map<Tile, Character> tileToChar;
+    
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private void initMaps() {
         
@@ -155,7 +158,6 @@ public class Grid2D {
         tileToChar.put(Tile.NON_TRAVERSABLE, 'N');
     }
     
-    private Map<Character, Tile> charToTile;
-    private Map<Tile, Character> tileToChar;
+
     
 }
