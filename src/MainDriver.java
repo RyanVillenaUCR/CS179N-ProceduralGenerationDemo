@@ -28,6 +28,7 @@ public class MainDriver {
         Coord2D markPoint = new Coord2D(5, 5);
         Coord2D unmarkedPoint = new Coord2D(5, 4);
         grid.getTile(markPoint).setMark(true);
+        
         System.out.println("Just marked tile " + markPoint + ", should be marked: " + grid.getTile(markPoint));
         System.out.println("Testing unmarked tile " + unmarkedPoint + ", should not be marked: " + grid.getTile(unmarkedPoint));
         System.out.println(grid);
