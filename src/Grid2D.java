@@ -5,7 +5,8 @@ import java.util.Map;
 public class Grid2D {
     
     /**
-     * @param dimensions X is columns, Y is rows
+     * Constructs new Grid2D and initializes all tiles to Tile.EMPTY
+     * @param dimensions X is horizontal, Y is vertical
      */
     public Grid2D(Coord2D dimensions) {
         
