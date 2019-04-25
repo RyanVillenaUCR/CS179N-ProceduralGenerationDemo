@@ -10,11 +10,19 @@ public class MainDriver {
 
     public static void testEmptyGrid() {
         
-        Grid2D grid = new Grid2D(new Coord2D(7, 13));
+        Coord2D gridDimensions = new Coord2D(7, 13);
+        Coord2D testPoint      = new Coord2D(2, 10);
+        Coord2D emptyPoint     = new Coord2D(3, 10);
+        @SuppressWarnings("unused")
+        Coord2D failPoint      = new Coord2D(7, 14);
         
-        grid.setTile(Tile.TRAVERSABLE, 10, 2);
+        Grid2D grid = new Grid2D(gridDimensions);
+        grid.setTile(Tile.TRAVERSABLE, testPoint);
         
         System.out.println(grid.toString());
+        System.out.println("Tile at " + testPoint.toString()  + ": " + grid.getTile(testPoint) );
+        System.out.println("Tile at " + emptyPoint.toString() + ": " + grid.getTile(emptyPoint));
+//        System.out.println("Tile at " + failPoint.toString()  + ": " + grid.getTile(failPoint));
     }
     
 	/**
