@@ -2,6 +2,11 @@
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Grid of Tile objects which can be accessed, changed, and printed.
+ * @author Ryan Villena
+ *
+ */
 public class Grid2D {
     
     /**
