@@ -2,5 +2,5 @@
 && (javac src/*.java) \
 && (echo "Compiled successfully! Running...") \
 && (echo "") \
-&& (java -classpath src/ MainDriver)
+&& (java -ea -classpath src/ MainDriver)
 
