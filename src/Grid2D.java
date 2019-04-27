@@ -115,12 +115,12 @@ public class Grid2D {
 
     public boolean canGoUp(Coord2D location) {
         
-        return location.getY() > 0;
+        return location.getY() < ROWS - 1;
     }
     
     public boolean canGoDown(Coord2D location) {
         
-        return location.getY() < ROWS - 1;
+        return location.getY() > 0;
     }
     
     public boolean canGoLeft(Coord2D location) {
@@ -137,14 +137,14 @@ public class Grid2D {
         
         if (!canGoUp(fromHere)) return null;
         
-        return getTile(new Coord2D(fromHere.getX(), fromHere.getY() - 1));
+        return getTile(new Coord2D(fromHere.getX(), fromHere.getY() + 1));
     }
     
     public Tile getDown(Coord2D fromHere) {
         
         if (!canGoDown(fromHere)) return null;
         
-        return getTile(new Coord2D(fromHere.getX(), fromHere.getY() + 1));
+        return getTile(new Coord2D(fromHere.getX(), fromHere.getY() - 1));
     }
     
     public Tile getLeft(Coord2D fromHere) {
