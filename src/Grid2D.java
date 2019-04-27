@@ -40,7 +40,8 @@ public class Grid2D {
         sb.append('\n');
         
         // Actual grid
-        for (int thisRow = 0; thisRow < ROWS; thisRow++) {
+//        for (int thisRow = 0; thisRow < ROWS; thisRow++) {
+        for (int thisRow = ROWS - 1; thisRow >= 0; thisRow-- ) {
             
             for (int thisCol = 0; thisCol < COLS; thisCol++) {
                 
