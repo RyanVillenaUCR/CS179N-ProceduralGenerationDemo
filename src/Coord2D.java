@@ -21,6 +21,11 @@ public class Coord2D {
         return "{" + Integer.toString(x) + ", " + Integer.toString(y) + "}";
     }
     
+    public boolean equals(Coord2D other) {
+        
+        return this.x == other.x && this.y == other.y;
+    }
+    
     private int x;
     private int y;
 }
