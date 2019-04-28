@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -6,7 +7,7 @@ import java.util.Set;
  * @author Ryan Villena
  *
  */
-public class Grid2D {
+public class Grid2D implements Iterable<Tile> {
     
     /**
      * Constructs new Grid2D and initializes all tiles to Tile.EMPTY
@@ -357,9 +358,14 @@ public class Grid2D {
         return neighbors;
     }
     
+    @Override
+    public Iterator<Tile> iterator() {
+        
+        return new Grid2DIterator(this);
+    }
+    
     private final int ROWS;
     private final int COLS;
     private Tile[][] grid;
-    
     
 }
