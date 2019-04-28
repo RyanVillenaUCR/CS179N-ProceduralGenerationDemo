@@ -15,6 +15,7 @@ public class Tile {
         this.marked = false;
         this.type = TileType.EMPTY;
         this.distance = Integer.MAX_VALUE;
+        this.prev = null;
     }
 
     Tile(TileType type) {
@@ -22,6 +23,7 @@ public class Tile {
         this.marked = false;
         this.type = type;
         this.distance = Integer.MAX_VALUE;
+        this.prev = null;
     }
     
     Tile(TileType type, int distance) {
@@ -29,6 +31,7 @@ public class Tile {
         this.marked = false;
         this.type = type;
         this.distance = distance;
+        this.prev = null;
     }
     
     Tile(TileType type, boolean mark) {
@@ -36,12 +39,14 @@ public class Tile {
         this.marked = mark;
         this.type = type;
         this.distance = Integer.MAX_VALUE;
+        this.prev = null;
     }
     
     Tile(Tile t) {
         this.marked = t.marked;
         this.type = t.type;
         this.distance = Integer.MAX_VALUE;
+        this.prev = null;
     }
     
     public char getChar() {
@@ -98,7 +103,18 @@ public class Tile {
         return distance;
     }
     
+    public void setPreviousTile(Tile prev) {
+        
+        this.prev = prev;
+    }
+    
+    public Tile getPreviousTile() {
+        
+        return prev;
+    }
+    
     private boolean marked;
     private TileType type;
     private int distance;
+    private Tile prev;
 }
