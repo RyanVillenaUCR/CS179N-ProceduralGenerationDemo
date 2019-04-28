@@ -335,24 +335,40 @@ public class Grid2D implements Iterable<Tile> {
         }
     }
     
-    public Set<Coord2D> getNeighbors(Coord2D location) {
+    public Set<Tile> getTraversableNeighbors(Coord2D location) {
         
-        Set<Coord2D> neighbors = new HashSet<Coord2D>();
+        Set<Tile> neighbors = new HashSet<Tile>();
         
         if (canGoUp(location)) {
-            neighbors.add(new Coord2D(location.getX(), location.getY() + 1));
+            
+            Tile upNeighbor = getUp(location);
+            
+            if (upNeighbor.getType() != Tile.TileType.NON_TRAVERSABLE)
+                neighbors.add(upNeighbor);
         }
         
         if (canGoDown(location)) {
-            neighbors.add(new Coord2D(location.getX(), location.getY() - 1));
+            
+            Tile downNeighbor = getDown(location);
+            
+            if (downNeighbor.getType() != Tile.TileType.NON_TRAVERSABLE)
+                neighbors.add(downNeighbor);
         }
         
         if (canGoLeft(location)) {
-            neighbors.add(new Coord2D(location.getX() - 1, location.getY()));
+            
+            Tile leftNeighbor = getLeft(location);
+            
+            if (leftNeighbor.getType() != Tile.TileType.NON_TRAVERSABLE)
+                neighbors.add(leftNeighbor);
         }
         
         if (canGoRight(location)) {
-            neighbors.add(new Coord2D(location.getX() + 1, location.getY()));
+
+            Tile rightNeighbor = getRight(location);
+            
+            if (rightNeighbor.getType() != Tile.TileType.NON_TRAVERSABLE)
+                neighbors.add(rightNeighbor);
         }
         
         return neighbors;
