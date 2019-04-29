@@ -7,6 +7,12 @@ public class Coord2D {
         this.y = y;
     }
 
+    public Coord2D(Coord2D other) {
+        
+        this.x = other.x;
+        this.y = other.y;
+    }
+    
     public int getX() {
         return x;
     }
