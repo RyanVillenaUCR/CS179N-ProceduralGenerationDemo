@@ -154,27 +154,7 @@ public class Path {
         
     }
     
-//    /**
-//     * Creates a new Grid2D of Tile objects with DijkstraTiles,
-//     * all initialized to max distance.
-//     * @param vanillaGrid Grid whose dimensions and other attributes will be used
-//     */
-//    private Grid2D getDijkstraGrid(Grid2D vanillaGrid) {
-//        
-//        Grid2D dGrid = new Grid2D(vanillaGrid.getGridDimensions());
-//        
-//        // Replace all tiles with corresponding DijkstraTiles
-//        for (int x = 0; x < vanillaGrid.getGridDimensions().getX(); x++) {
-//            for (int y = 0; y < vanillaGrid.getGridDimensions().getY(); y++) {
-//                
-//                Coord2D thisCoord2D = new Coord2D(x, y);
-//                Tile thisTile = vanillaGrid.getTile(thisCoord2D);
-//                dGrid.setDijkstraTile(thisTile.getType(), thisCoord2D, Integer.MAX_VALUE);
-//            }
-//        }
-//        
-//        return dGrid;
-//    }
+    
     
     private Grid2D grid;
     private List<Coord2D> joints;
