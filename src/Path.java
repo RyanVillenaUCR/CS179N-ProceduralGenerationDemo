@@ -229,6 +229,13 @@ public class Path {
             
             joints.add(uTile.getLocation());
             uTile = uTile.getPreviousTile();
+            
+            assert (!(uTile == null && joints.size() < 2))
+                : "Not enough prev's? For sure not enough joints\n"
+                + "Perhaps src and dest are the same?\n"
+                + "src:  " + src.toString() + '\n'
+                + "dest: " + dest.toString() + '\n'
+                + "src.equals(dest)? " + src.equals(dest);
         }
     }
     
