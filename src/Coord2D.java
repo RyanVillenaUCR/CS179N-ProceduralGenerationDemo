@@ -27,9 +27,18 @@ public class Coord2D {
         return "{" + Integer.toString(x) + ", " + Integer.toString(y) + "}";
     }
     
-    public boolean equals(Coord2D other) {
+    @Override
+    public boolean equals(Object other) {
         
-        return this.x == other.x && this.y == other.y;
+//        return this.x == other.x && this.y == other.y;
+        if (other instanceof Coord2D) {
+            
+            Coord2D otherCoord = (Coord2D) other;
+            
+            return this.x == otherCoord.x && this.y == otherCoord.y;
+        }
+        
+        else return false;
     }
     
     private int x;
