@@ -233,7 +233,8 @@ public class Grid2D implements Iterable<Tile> {
         }
     }
     
-    public void setTypeLine(Coord2D point1, Coord2D point2, Tile.TileType type) {
+    public void setTypeLine(Coord2D point1, Coord2D point2,
+            Tile.TileType type, boolean prioritize) {
         
         assertBounds(point1);
         assertBounds(point2);
@@ -245,7 +246,8 @@ public class Grid2D implements Iterable<Tile> {
         
         if (point1.equals(point2)) {
             Tile t = getTile(point1);
-            t.setType(type);
+            if (prioritize || t.getType() == Tile.TileType.EMPTY)
+                t.setType(type);
             return;
         }
         
@@ -259,7 +261,9 @@ public class Grid2D implements Iterable<Tile> {
                     i++) {
                 
                 Tile thisTile = getTile(new Coord2D(i, point1.getY()));
-                thisTile.setType(type);
+                
+                if (prioritize || thisTile.getType() == Tile.TileType.EMPTY)
+                    thisTile.setType(type);
             }
         }
         
@@ -273,7 +277,9 @@ public class Grid2D implements Iterable<Tile> {
                     i++) {
                 
                 Tile thisTile = getTile(new Coord2D(point1.getX(), i));
-                thisTile.setType(type);
+                
+                if (prioritize || thisTile.getType() == Tile.TileType.EMPTY)
+                    thisTile.setType(type);
             }
         }
     }
@@ -289,7 +295,7 @@ public class Grid2D implements Iterable<Tile> {
         
         
         if (lowerLeft.getX() == upperRight.getX() || lowerLeft.getY() == upperRight.getY()) {
-            setTypeLine(lowerLeft, upperRight, type);
+            setTypeLine(lowerLeft, upperRight, type, true);
             return;
         }
         
@@ -302,9 +308,72 @@ public class Grid2D implements Iterable<Tile> {
             Coord2D thisRowLeft = new Coord2D(lowerLeft.getX(), thisY);
             Coord2D thisRowRight = new Coord2D(upperRight.getX(), thisY);
             
-            setTypeLine(thisRowLeft, thisRowRight, type);
+            setTypeLine(thisRowLeft, thisRowRight, type, true);
         }
     }
+    
+    public void setTypeLine(Coord2D point1, Coord2D point2, Tile.TileType type,
+            int layers, boolean prioritize) {
+        
+        for (int thisLevel = 0; thisLevel <= layers; thisLevel++) {
+            
+            // Row (horizontal)
+            if (point1.getY() == point2.getY()) {
+                
+                // Do row on top, offset by thisLevel
+                Coord2D point1Layered = new Coord2D(point1.getX(), point1.getY() + thisLevel);
+                Coord2D point2Layered = new Coord2D(point2.getX(), point2.getY() + thisLevel);
+                
+                if (checkBounds(point1Layered) && checkBounds(point2Layered)) {
+                    
+                    setTypeLine(point1Layered, point2Layered, type, prioritize);
+                }
+                
+                
+                
+                // Do row on bot, offset by thisLevel
+                point1Layered = new Coord2D(point1.getX(), point1.getY() - thisLevel);
+                point2Layered = new Coord2D(point2.getX(), point2.getY() - thisLevel);
+                
+                if (checkBounds(point1Layered) && checkBounds(point2Layered)) {
+                    
+                    setTypeLine(point1Layered, point2Layered, type, prioritize);
+                }
+            }
+            
+            // Col (vertical)
+            else if (point1.getX() == point2.getX()) {
+                
+                // Do col on left, offset by thisLevel
+                Coord2D point1Layered = new Coord2D(point1.getX() - thisLevel, point1.getY());
+                Coord2D point2Layered = new Coord2D(point2.getX() - thisLevel, point2.getY());
+                
+                if (checkBounds(point1Layered) && checkBounds(point2Layered)) {
+                    
+                    setTypeLine(point1Layered, point2Layered, type, prioritize);
+                }
+                
+                
+                
+                // Do col on right, offset by thisLevel
+                point1Layered = new Coord2D(point1.getX() + thisLevel, point1.getY());
+                point2Layered = new Coord2D(point1.getX() + thisLevel, point2.getY());
+                
+                if (checkBounds(point1Layered) && checkBounds(point2Layered)) {
+                    
+                    setTypeLine(point1Layered, point2Layered, type, prioritize);
+                }
+            }
+            
+            
+            
+            else {
+                
+                assert false : " point1 and point2 not on a line";
+            }
+        }
+    }
+    
     
     /**
      * Mark a rectangular region between the two points

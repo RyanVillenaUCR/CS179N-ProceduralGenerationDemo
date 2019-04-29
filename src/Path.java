@@ -10,20 +10,23 @@ public class Path {
         
         this.grid = grid;
         joints = new ArrayList<Coord2D>();
+        this.thickness = 0;
     }
     
-    public Path(Grid2D grid, Coord2D point1, Coord2D point2) {
+    public Path(Grid2D grid, Coord2D point1, Coord2D point2, int thickness) {
         
         this.grid = grid;
         this.joints = new ArrayList<Coord2D>();
+        this.thickness = thickness;
         
         populateBestPath(point1, point2);
     }
     
-    public Path(Grid2D grid, List<Coord2D> joints) {
+    public Path(Grid2D grid, List<Coord2D> joints, int thickness) {
         
         this.grid = grid;
         this.joints = new ArrayList<Coord2D>(joints);
+        this.thickness = thickness;
     }
     
     public boolean areCompatibleJoints(Coord2D joint1, Coord2D joint2) {
@@ -115,7 +118,7 @@ public class Path {
      * and I'm going to abort your program.
      * @param type Type that all tiles on this path should be set to
      */
-    public void setPathType(Tile.TileType type) {
+    public void setPathType(Tile.TileType type, boolean prioritize) {
         
         assert joints.size() >= 2 : " Not enough joints in this path,\n"
             + "here are all joints: " + joints.toString();
@@ -126,29 +129,39 @@ public class Path {
         while (it.hasNext()) {
             
             Coord2D secondJoint = it.next();
-            grid.setTypeLine(firstJoint, secondJoint, type);            
+            grid.setTypeLine(firstJoint, secondJoint, type, thickness, prioritize);            
             
             // Slide first joint
             firstJoint = secondJoint;
         }
     }
     
+    
+    
     /**
      * Populates this Path's "joints" list with the best path between point1 and point2.
      * This is accomplished by implementing Djikstra's algorithm.
-     * This Path's grid and joints MUST be set before this method is called.
+     * This Path's grid and joints MUST be initialized before this method is called.
+     * Algorithm adapted from the pseudocode found here:
+     * https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Pseudocode
      * @param src The coordinate that the path should start from
      * @param dest The coordinate that the path should lead to
      */
     private void populateBestPath(Coord2D src, Coord2D dest) {
         
-        assert src != dest : " Attempted autopath to the same tile";
         
         Grid2D tempGrid = new Grid2D(this.grid); // generates copy, maintaining types
         
         Tile srcTile  = tempGrid.getTile(src);
         Tile destTile = tempGrid.getTile(dest);
         srcTile.setDistance(0);
+        
+        // Do some error checking 
+        assert src != dest : " Attempted autopath to the same tile";
+        assert srcTile.getType() != Tile.TileType.NON_TRAVERSABLE
+                : " Path attempted on non-traversable tile " + srcTile.toString();
+        assert destTile.getType() != Tile.TileType.NON_TRAVERSABLE
+                : " Path attempted on non-traversable tile " + destTile.toString();
         
         
         
@@ -223,4 +236,5 @@ public class Path {
     
     private Grid2D grid;
     private List<Coord2D> joints;
+    private int thickness;
 }

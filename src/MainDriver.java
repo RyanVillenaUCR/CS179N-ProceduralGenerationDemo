@@ -53,22 +53,24 @@ public class MainDriver {
     
     public static void testMarkRow() {
         
-        Coord2D gridDimensions = new Coord2D(7, 13);
+        Coord2D gridDimensions = new Coord2D(10, 10);
         Grid2D grid = new Grid2D(gridDimensions);
         
         System.out.println("Empty grid:\n" + grid);
         
         Coord2D lowbar_left = new Coord2D(0, 2);
         Coord2D lowbar_right = new Coord2D(gridDimensions.getX() - 1, lowbar_left.getY());
+
+        
+        System.out.println("Marking lower bar...");
+        grid.setTypeLine(lowbar_left, lowbar_right, Tile.TileType.TRAVERSABLE, 0, true);
+        System.out.println(grid);
+        
         Coord2D vertbar_down = new Coord2D(2, 0);
         Coord2D vertbar_up = new Coord2D(vertbar_down.getX(), gridDimensions.getY() - 1);
         
-        System.out.println("Marking lower bar...");
-        grid.markLine(lowbar_left, lowbar_right, true);
-        System.out.println(grid);
-        
         System.out.println("Marking vert bar...");
-        grid.markLine(vertbar_down, vertbar_up, true);
+        grid.setTypeLine(vertbar_down, vertbar_up, Tile.TileType.TRAVERSABLE, 2, true);
         System.out.println(grid);
         
         
@@ -116,7 +118,7 @@ public class MainDriver {
         assert path.addJoint(new Coord2D(30, 2));
         assert path.addJoint(new Coord2D(30, 0));
         
-        path.setPathType(Tile.TileType.TRAVERSABLE);
+        path.setPathType(Tile.TileType.TRAVERSABLE, true);
         
 
         
@@ -157,7 +159,7 @@ public class MainDriver {
         System.out.println("Grid with single obstacle:\n\n" + grid);
         
         Coord2D pointA = new Coord2D(1, 1);
-        Coord2D pointB = new Coord2D(9, 0);
+        Coord2D pointB = new Coord2D(9, 8);
         grid.getTile(pointA).setType(Tile.TileType.TRAVERSABLE);
         grid.getTile(pointB).setType(Tile.TileType.TRAVERSABLE);
         
@@ -165,8 +167,8 @@ public class MainDriver {
         System.out.println("          pointB = " + pointB);
         System.out.println(grid);
         
-        Path path = new Path(grid, pointA, pointB);
-        path.setPathType(Tile.TileType.TRAVERSABLE);
+        Path path = new Path(grid, pointA, pointB, 1);
+        path.setPathType(Tile.TileType.TRAVERSABLE, false);
         
         System.out.println("Grid with best route:\n" + grid);
     }
