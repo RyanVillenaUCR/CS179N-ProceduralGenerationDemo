@@ -1,5 +1,6 @@
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Project to demonstrate procedural generation on a 2D grid.
@@ -154,7 +155,7 @@ public class MainDriver {
         Coord2D obstacle_LowerLeft = new Coord2D(5, 2);
         Coord2D obstacle_UpperRight= new Coord2D(7, 5);
         
-        grid.setTypeRect(obstacle_LowerLeft, obstacle_UpperRight, Tile.TileType.NON_TRAVERSABLE);
+        grid.setTypeRect(obstacle_LowerLeft, obstacle_UpperRight, Tile.TileType.NON_TRAVERSABLE, true);
         
         System.out.println("Grid with single obstacle:\n\n" + grid);
         
