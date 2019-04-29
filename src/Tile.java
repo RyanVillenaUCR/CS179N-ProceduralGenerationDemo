@@ -24,6 +24,16 @@ public class Tile {
         this.type = type;
         this.distance = Integer.MAX_VALUE;
         this.prev = null;
+        this.location = null;
+    }
+    
+    Tile(TileType type, Coord2D location) {
+        
+        this.marked = false;
+        this.type = type;
+        this.distance = Integer.MAX_VALUE;
+        this.prev = null;
+        this.location = new Coord2D(location);
     }
     
     Tile(TileType type, int distance) {
@@ -90,7 +100,8 @@ public class Tile {
         
         return TileType.class.getSimpleName() + " " + this.type.toString() + ", "
                 + (marked ? "" : "not ") + "marked, "
-                + "distance = " + (distance == Integer.MAX_VALUE ? "MAX_VALUE" : distance);
+                + "distance = " + (distance == Integer.MAX_VALUE ? "MAX_VALUE" : distance) + ", "
+                + "location " + location.toString();
     }
     
     public void setDistance(int distance) {
@@ -113,8 +124,14 @@ public class Tile {
         return prev;
     }
     
+    public Coord2D getLocation() {
+        
+        return location;
+    }
+    
     private boolean marked;
     private TileType type;
     private int distance;
     private Tile prev;
+    private Coord2D location;
 }
