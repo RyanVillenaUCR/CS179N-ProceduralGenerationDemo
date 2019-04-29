@@ -176,6 +176,8 @@ public class MainDriver {
     
     public static void testGenerateGameGrid(int numOfGrids) {
         
+        assert numOfGrids >= 0 : "You tried to generate a negative number of grids";
+        
         Coord2D gridDimensions = new Coord2D(50, 50);
 //        GameGrid2D grid = new GameGrid2D(gridDimensions);
 //        System.out.println("grid:\n" + grid);
