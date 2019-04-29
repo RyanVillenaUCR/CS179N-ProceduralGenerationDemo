@@ -2,3 +2,4 @@ bin/
 .classpath
 .project
 *.class
+output_max_iterations.txt
