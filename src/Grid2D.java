@@ -409,6 +409,7 @@ public class Grid2D implements Iterable<Tile> {
         }
     }
     
+    
     public Set<Tile> getTraversableNeighbors(Coord2D location) {
         
         Set<Tile> neighbors = new HashSet<Tile>();
@@ -448,6 +449,7 @@ public class Grid2D implements Iterable<Tile> {
         return neighbors;
     }
     
+    
     @Override
     public Iterator<Tile> iterator() {
         
@@ -456,6 +458,6 @@ public class Grid2D implements Iterable<Tile> {
     
     private final int ROWS;
     private final int COLS;
-    private Tile[][] grid;
+    protected Tile[][] grid;
     
 }
