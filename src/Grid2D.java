@@ -284,7 +284,8 @@ public class Grid2D implements Iterable<Tile> {
         }
     }
 
-    public void setTypeRect(Coord2D lowerLeft, Coord2D upperRight, Tile.TileType type) {
+    public void setTypeRect(Coord2D lowerLeft, Coord2D upperRight,
+            Tile.TileType type, boolean prioritize) {
         
         assertBounds(lowerLeft);
         assertBounds(upperRight);
@@ -295,7 +296,7 @@ public class Grid2D implements Iterable<Tile> {
         
         
         if (lowerLeft.getX() == upperRight.getX() || lowerLeft.getY() == upperRight.getY()) {
-            setTypeLine(lowerLeft, upperRight, type, true);
+            setTypeLine(lowerLeft, upperRight, type, prioritize);
             return;
         }
         
@@ -308,7 +309,7 @@ public class Grid2D implements Iterable<Tile> {
             Coord2D thisRowLeft = new Coord2D(lowerLeft.getX(), thisY);
             Coord2D thisRowRight = new Coord2D(upperRight.getX(), thisY);
             
-            setTypeLine(thisRowLeft, thisRowRight, type, true);
+            setTypeLine(thisRowLeft, thisRowRight, type, prioritize);
         }
     }
     
