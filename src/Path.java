@@ -117,7 +117,8 @@ public class Path {
      */
     public void setPathType(Tile.TileType type) {
         
-        assert joints.size() >= 2 : " Not enough joints in this path";
+        assert joints.size() >= 2 : " Not enough joints in this path,\n"
+            + "here are all joints: " + joints.toString();
         
         Coord2D firstJoint = joints.get(0);
         ListIterator<Coord2D> it = joints.listIterator();
@@ -141,17 +142,81 @@ public class Path {
      */
     private void populateBestPath(Coord2D src, Coord2D dest) {
         
-//        Grid2D tempGrid = getDijkstraGrid(this.grid); // generates copy, maintaining types
-        Grid2D tempGrid = new Grid2D(this.grid);
+        assert src != dest : " Attempted autopath to the same tile";
         
-        Tile srcTile = tempGrid.getTile(src);
+        Grid2D tempGrid = new Grid2D(this.grid); // generates copy, maintaining types
+        
+        Tile srcTile  = tempGrid.getTile(src);
+        Tile destTile = tempGrid.getTile(dest);
         srcTile.setDistance(0);
         
-        // Keep track of "seen" tiles
-        Set<Tile> seen = new HashSet<Tile>();
-        seen.add(srcTile);
         
         
+        // Populate set Q
+        Set<Tile> setQ = new HashSet<Tile>();
+        setQ.add(grid.getTile(new Coord2D(0, 0)));
+        for (Tile t : tempGrid) {
+            
+            if (t.getType() != Tile.TileType.NON_TRAVERSABLE)
+                setQ.add(t);
+        }
+
+        assert setQ.contains(srcTile)  : " setQ doesn't contain srcTile";
+        assert setQ.contains(destTile) : " setQ doesn't contain destTile";
+        
+        Tile uTile = null;
+        
+        while (!setQ.isEmpty()) {
+            
+            // Get tile with minimum distance from setQ
+            int runningMin = Integer.MAX_VALUE;
+            for (Tile t : setQ) {
+                
+                if (t.getDistance() < runningMin) {
+                    
+                    runningMin = t.getDistance();
+                    uTile = t;
+                }
+            }
+            
+            // Make sure uTile is properly set,
+            // then remove it from setQ
+            assert uTile != null : " Minimum distance tile uTile not properly set";
+            assert setQ.contains(uTile) : " setQ doesn't contain uTile " + uTile.toString();
+            setQ.remove(uTile);
+            
+            // Break out if we've reached the destination,
+            // we need to now construct the path via reverse iteration
+            if (uTile == destTile)
+                break;
+            
+            // Update distances of all uTile's current neighbors            
+            Set<Tile> uNeighbors = tempGrid.getTraversableNeighbors(uTile.getLocation());
+            
+            for (Tile thisNeighbor : uNeighbors) {
+                
+                int currentDist = uTile.getDistance() + 1;
+                
+                if (currentDist < thisNeighbor.getDistance()) {
+                    
+                    thisNeighbor.setDistance(currentDist);
+                    thisNeighbor.setPreviousTile(uTile);
+                }
+            }
+        }
+        
+        
+        
+        // Ensure that uTile is actually usable
+        assert uTile.getPreviousTile() != null || uTile == srcTile
+                : " Condition specified by Dijkstra's not met";
+            
+        // Populate joints by backtracing
+        while (uTile != null) {
+            
+            joints.add(uTile.getLocation());
+            uTile = uTile.getPreviousTile();
+        }
     }
     
     
