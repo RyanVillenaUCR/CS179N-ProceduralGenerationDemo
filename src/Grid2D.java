@@ -134,6 +134,11 @@ public class Grid2D implements Iterable<Tile> {
         return new Coord2D(COLS, ROWS);
     }
     
+    public int size() {
+        
+        return ROWS * COLS;
+    }
+    
     public char getChar(Coord2D location) {
         
         return getTile(location).getChar();
