@@ -103,7 +103,7 @@ public class Grid2D implements Iterable<Tile> {
         
         assertBounds(location);
         
-        grid[location.getY()][location.getX()] = new Tile(t);
+        grid[location.getY()][location.getX()] = new Tile(t, new Coord2D(location));
     }
         
     public Tile getTile(Coord2D location) {
