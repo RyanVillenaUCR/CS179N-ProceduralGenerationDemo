@@ -173,6 +173,28 @@ public class MainDriver {
         System.out.println("Grid with best route:\n" + grid);
     }
     
+    public static void testGenerateGameGrid(int numOfGrids) {
+        
+        Coord2D gridDimensions = new Coord2D(50, 50);
+//        GameGrid2D grid = new GameGrid2D(gridDimensions);
+//        System.out.println("grid:\n" + grid);
+        
+        for (int i = 0; i < numOfGrids; i++) {
+            
+            // Wait between each generation,
+            // because randomization depends on the clock
+            try {
+                TimeUnit.MILLISECONDS.sleep(19);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            
+            GameGrid2D grid = new GameGrid2D(gridDimensions, 5, 7);
+            System.out.println("Grid #" + i + '\n' + grid + "\n\n");
+        }
+    }
+    
 	/**
 	 * @param args
 	 */
@@ -190,7 +212,12 @@ public class MainDriver {
 		
 //		testIterator();
 		
-		testDijkstra();
+//		testDijkstra();
+		
+		if (args.length == 0)
+		    testGenerateGameGrid(Integer.MAX_VALUE);
+		else
+		    testGenerateGameGrid(Integer.parseInt(args[0]));
 	}
 
 }
