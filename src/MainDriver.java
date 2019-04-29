@@ -1,3 +1,6 @@
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Project to demonstrate procedural generation on a 2D grid.
  */
@@ -123,13 +126,49 @@ public class MainDriver {
         System.out.println("Populated grid:\n\n" + grid);
         System.out.println("Copy:\n\n" + copy);
     }
-    
-    public static void testMapRegions() {
+       
+    public static void testIterator() {
         
         Coord2D gridDimensions = new Coord2D(50, 50);
         Grid2D grid = new Grid2D(gridDimensions);
         
-        System.out.println("Empty grid:\n\n" + grid);
+        Set<Tile> tiles = new HashSet<Tile>();
+        tiles.add(grid.getTile(new Coord2D(0, 0))); // careful, need to manually add first element
+        for (Tile t : grid) {
+            
+            tiles.add(t);
+        }
+        
+        System.out.println("Expected size: " + (gridDimensions.getX() * gridDimensions.getY()));
+        System.out.println("Num of tiles: " + tiles.size());
+    }
+    
+    public static void testDijkstra() {
+        
+        Coord2D gridDimensions = new Coord2D(10, 10);
+        Grid2D grid = new Grid2D(gridDimensions);
+        
+        // Make a non-traversable obstacle
+        Coord2D obstacle_LowerLeft = new Coord2D(5, 2);
+        Coord2D obstacle_UpperRight= new Coord2D(7, 5);
+        
+        grid.setTypeRect(obstacle_LowerLeft, obstacle_UpperRight, Tile.TileType.NON_TRAVERSABLE);
+        
+        System.out.println("Grid with single obstacle:\n\n" + grid);
+        
+        Coord2D pointA = new Coord2D(1, 1);
+        Coord2D pointB = new Coord2D(9, 0);
+        grid.getTile(pointA).setType(Tile.TileType.TRAVERSABLE);
+        grid.getTile(pointB).setType(Tile.TileType.TRAVERSABLE);
+        
+        System.out.println("Grid with pointA = " + pointA);
+        System.out.println("          pointB = " + pointB);
+        System.out.println(grid);
+        
+        Path path = new Path(grid, pointA, pointB);
+        path.setPathType(Tile.TileType.TRAVERSABLE);
+        
+        System.out.println("Grid with best route:\n" + grid);
     }
     
 	/**
@@ -145,9 +184,11 @@ public class MainDriver {
 		
 //		testMarkRect();
 		
-		testPaths();
+//		testPaths();
 		
-//		testMapRegions();
+//		testIterator();
+		
+		testDijkstra();
 	}
 
 }
