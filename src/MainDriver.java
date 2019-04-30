@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -14,6 +16,29 @@ import java.util.concurrent.TimeUnit;
  */
 public class MainDriver {
 
+    public static void testSetOfPoints() {
+        
+        Coord2D original = new Coord2D(3, 4);
+        Coord2D duplicate = new Coord2D(original);
+        Coord2D anotherone = new Coord2D(6, 9);
+        
+        assert original != duplicate : "original == duplicate";
+        assert duplicate.equals(original) : "Coord2D.equals() broken";
+        
+        Set<Coord2D> set = new HashSet<Coord2D>(3);
+        set.add(original);
+        System.out.println("Set contains original. Contains duplicate? " + set.contains(duplicate));
+//        if (!set.contains(duplicate))
+            set.add(duplicate);
+        set.add(anotherone);
+        
+        List<Coord2D> list = new ArrayList<Coord2D>(set.size());
+        list.addAll(set);
+        
+        System.out.println("Set:  " + set);
+        System.out.println("List: " + list);
+    }
+    
     public static void testGrid() {
         
         Coord2D gridDimensions = new Coord2D(7, 13);
@@ -205,6 +230,8 @@ public class MainDriver {
 		
 		System.out.println("Hello world!");
 
+//		testSetOfPoints();
+		
 //		testGrid();
 		
 //		testMarkRow();
