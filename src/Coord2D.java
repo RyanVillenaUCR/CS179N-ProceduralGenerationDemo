@@ -41,6 +41,12 @@ public class Coord2D {
         else return false;
     }
     
+    @Override
+    public int hashCode() {
+        
+        return x + y;
+    }
+    
     private int x;
     private int y;
 }
