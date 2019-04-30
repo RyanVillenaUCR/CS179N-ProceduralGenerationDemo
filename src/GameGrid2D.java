@@ -23,7 +23,7 @@ public class GameGrid2D extends Grid2D {
         // Also initializes p1UpRight and p2LowLeft
         drawBases();
         
-        List<Coord2D> landmarks = getRandomPoints(numLandmarks);
+        List<Coord2D> landmarks = getDistinctRandomPoints(numLandmarks);
         landmarks.add(0, p1UpRight);
         landmarks.add(landmarks.size(), p2LowLeft);
         
@@ -69,27 +69,37 @@ public class GameGrid2D extends Grid2D {
         super.setTypeRect(p2LowLeft, p2UpRight, Tile.TileType.TRAVERSABLE, true);
     }
     
-    private List<Coord2D> getRandomPoints(int amount) {
+    /**
+     * Returns a list of random Coord2D objects of specified size.
+     * You are guaranteed that this list will have no duplicate values,
+     * and will also not contain the values p1UpRight or p2LowLeft.
+     * Additionally, none of these points shall fall within the bases.
+     * @param amount Number of random points to generate
+     * @return List of distinct Coord2D objects
+     */
+    private List<Coord2D> getDistinctRandomPoints(int amount) {
         
         Set<Coord2D> pointsSet = new HashSet<Coord2D>(amount);
         
         // Use the same Random object to ensure correct output
         Random r = new Random(System.currentTimeMillis());
         
+        // We use a while loop instead of a for loop
+        // because there's a small chance
+        // that we could accidentally generate duplicate Coord2D's
         while (pointsSet.size() < amount) {
             
             Coord2D randCoord = getRandomNonBase(r);
             
-            if (!pointsSet.contains(randCoord)) // this should be implicit but....
+            // These two will populate pointsSet later,
+            // so check for duplicates now
+            if (!randCoord.equals(p1UpRight) && !randCoord.equals(p2LowLeft))
                 pointsSet.add(randCoord);
         }
         
         // As far as this function is concerned,
         // order does not matter
         List<Coord2D> pointsList = new ArrayList<Coord2D>(pointsSet);
-        
-        assert TEMP_noDuplicates(pointsList) : " Duplicates found in getRandomPoints!\n"
-            + pointsList.toString();
         
         return pointsList;
     }
@@ -141,18 +151,7 @@ public class GameGrid2D extends Grid2D {
         return new Coord2D(x, y);
     }
     
-    private boolean TEMP_noDuplicates(List<Coord2D> l) {
-        
-        if (l.size() <= 1) return true;
-        
-        for (int i = 0; i < l.size() - 1; i++) {
-            
-            if (l.get(i).equals(l.get(i + 1)))
-                return false;
-        }
-        
-        return true;
-    }
+    
     
     private final int BASE_WIDTH = 8;
     
