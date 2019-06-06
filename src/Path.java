@@ -1,7 +1,9 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Random;
 import java.util.Set;
 
 public class Path {
@@ -173,17 +175,20 @@ public class Path {
             if (t.getType() != Tile.TileType.NON_TRAVERSABLE)
                 setQ.add(t);
         }
+        List<Tile> arrQ = new ArrayList<Tile>(setQ);
+        Collections.shuffle(arrQ, new Random(System.currentTimeMillis()));
 
-        assert setQ.contains(srcTile)  : " setQ doesn't contain srcTile";
-        assert setQ.contains(destTile) : " setQ doesn't contain destTile";
+        assert arrQ.contains(srcTile)  : " arrQ doesn't contain srcTile";
+        assert arrQ.contains(destTile) : " arrQ doesn't contain destTile";
+        
         
         Tile uTile = null;
         
-        while (!setQ.isEmpty()) {
+        while (!arrQ.isEmpty()) {
             
-            // Get tile with minimum distance from setQ
+            // Get tile with minimum distance from arrQ
             int runningMin = Integer.MAX_VALUE;
-            for (Tile t : setQ) {
+            for (Tile t : arrQ) {
                 
                 if (t.getDistance() < runningMin) {
                     
@@ -195,8 +200,8 @@ public class Path {
             // Make sure uTile is properly set,
             // then remove it from setQ
             assert uTile != null : " Minimum distance tile uTile not properly set";
-            assert setQ.contains(uTile) : " setQ doesn't contain uTile " + uTile.toString();
-            setQ.remove(uTile);
+            assert arrQ.contains(uTile) : " arrQ doesn't contain uTile " + uTile.toString();
+            arrQ.remove(uTile);
             
             // Break out if we've reached the destination,
             // we need to now construct the path via reverse iteration
@@ -205,8 +210,10 @@ public class Path {
             
             // Update distances of all uTile's current neighbors            
             Set<Tile> uNeighbors = tempGrid.getTraversableNeighbors(uTile.getLocation());
+            List<Tile> uNeighborsShuffled = new ArrayList<Tile>(uNeighbors);
+            Collections.shuffle(uNeighborsShuffled);
             
-            for (Tile thisNeighbor : uNeighbors) {
+            for (Tile thisNeighbor : uNeighborsShuffled) {
                 
                 int currentDist = uTile.getDistance() + 1;
                 
