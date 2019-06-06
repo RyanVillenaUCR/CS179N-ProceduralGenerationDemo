@@ -79,9 +79,9 @@ int main(/*int argc, char *argv[]*/)
 
 //    testUInts();
 
-    testSetOfPoints();
+//    testSetOfPoints();
 
-//    testGrid();
+    testGrid();
 
     return 0;
 }
