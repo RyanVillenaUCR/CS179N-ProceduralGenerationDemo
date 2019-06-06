@@ -14,6 +14,11 @@ void testUInts() {
     std::cout << "Does 0 - 1 == -1 ?     " << ( UINT_NEG_1 == static_cast<unsigned int>(-1) ) << std::endl;
     std::cout << "UINT_MAX:              " << UINT_MAX << std::endl;
     std::cout << "UINT_MAX == -1 ?       " << ( UINT_MAX == UINT_NEG_1 ) << std::endl;
+
+    std::cout << "Would UINT_MAX - 3 be negative?" << std::endl
+              << "UINT_MAX - 3: " << UINT_MAX - 3 << std::endl
+              << "Would be negative as a signed int? " << wouldBeNegative(UINT_MAX - 3) << std::endl
+              << std::endl;
 }
 
 void testSetOfPoints() {
@@ -71,17 +76,60 @@ void testGrid() {
          << "Can testPoint " << testPoint << " go right? " << grid.canGoRight(testPoint) << endl;
 }
 
+void testMarkLine() {
 
+    Coord2D gridDimensions(25, 10);
+    Grid2D grid(gridDimensions);
+
+    std::cout << "Empty grid:" << std::endl << grid << std::endl << std::endl;
+
+    Coord2D lowbar_left (0, 2);
+    Coord2D lowbar_right(gridDimensions.first - 1, lowbar_left.second);
+
+    std::cout << "Marking lower bar..." << std::endl;
+    grid.setTypeLine(lowbar_left, lowbar_right, Tile::TileType::TRAVERSABLE, false, 0);
+    std::cout << grid << std::endl << std::endl;
+
+    Coord2D vertbar_down(2, 0);
+    Coord2D vertbar_up  (vertbar_down.first, gridDimensions.second - 1);
+
+    std::cout << "Marking vert bar..." << std::endl;
+    grid.setTypeLine(vertbar_down, vertbar_up, Tile::TileType::TRAVERSABLE, false, 0);
+    std::cout << grid << std::endl << std::endl;
+
+}
+
+void testMarkRect() {
+
+    Coord2D gridDimensions(7, 13);
+    Grid2D grid(gridDimensions);
+
+    std::cout << "Empty grid:" << std::endl << grid << std::endl << std::endl;
+
+    Coord2D middleBand_lowLeft(0, 3);
+    Coord2D middleBand_upRight(gridDimensions.first - 1, 6);
+
+    std::cout << "Making a band in the middle:" << std::endl;
+    grid.setTypeRect(middleBand_lowLeft, middleBand_upRight, Tile::TileType::TRAVERSABLE, false);
+
+    std::cout << grid << std::endl << std::endl;
+}
 
 int main(/*int argc, char *argv[]*/)
 {
-    std::cout << "Hello World!" << std::endl;
+    std::cout << "Hello World!" << std::endl << std::endl;
 
 //    testUInts();
 
 //    testSetOfPoints();
 
-    testGrid();
+//    testGrid();
+
+//    testMarkLine();
+
+    testMarkRect();
+
+
 
     return 0;
 }
