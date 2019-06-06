@@ -48,7 +48,7 @@ void Grid2D::setTypeLine(const Coord2D& point1, const Coord2D& point2,
         unsigned int smaller_y = (point1.second < point2.second ? point1.second : point2.second);
         unsigned int bigger_y  = (point1.second > point2.second ? point1.second : point2.second);
 
-        for (unsigned int i = 0; i <= bigger_y; i++) {
+        for (unsigned int i = smaller_y; i <= bigger_y; i++) {
 
             Tile& thisTile = getTile(point1.first, i);
 
