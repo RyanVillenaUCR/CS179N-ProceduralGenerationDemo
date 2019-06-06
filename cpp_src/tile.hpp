@@ -73,9 +73,6 @@ public:
 
     friend std::ostream& operator <<(std::ostream& out, const Tile& printMe) {
 
-//        char distance_buffer[64];
-//        itoa(printMe.distance, distance_buffer, 10);
-
         out << "Type " << printMe.getChar() << ", ";
 
         if (printMe.distance == UINT_MAX)
