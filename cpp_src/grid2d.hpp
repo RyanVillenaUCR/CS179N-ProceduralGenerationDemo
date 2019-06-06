@@ -212,6 +212,17 @@ public:
         return getTile(fromHere.first + 1, fromHere.second);
     }
 
+    void setTypeLine(const Coord2D& point1, const Coord2D& point2,
+        Tile::TileType type, bool prioritize);
+
+    void setTypeRect(const Coord2D& lowerLeft, const Coord2D& upperRight,
+        Tile::TileType type, bool prioritize);
+
+    void setTypeLine(const Coord2D& point1, const Coord2D& point2,
+        Tile::TileType type, bool prioritize,
+        size_t layers);
+
+
 private:
 
     Coord2D grid_dimensions;
