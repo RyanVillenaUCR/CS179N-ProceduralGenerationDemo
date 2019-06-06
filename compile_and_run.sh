@@ -1,6 +1,6 @@
 (echo "Compiling...") \
-&& (javac src/*.java) \
+&& (javac java_src/*.java) \
 && (echo "Compiled successfully! Running...") \
 && (echo "") \
-&& (java -ea -classpath src/ MainDriver $1)
+&& (java -ea -classpath java_src/ MainDriver $1)
 
