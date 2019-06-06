@@ -29,6 +29,9 @@ void testSetOfPoints() {
     else
         cout << "pair::operator == uses identity" << endl;
 
+    if (original != duplicate || original == anotherOne)
+        cout << "one of the operators is broken..." << endl;
+
     set<Coord2D> set;
     set.insert(original);
 
@@ -70,15 +73,15 @@ void testGrid() {
 
 
 
-int main(int argc, char *argv[])
+int main(/*int argc, char *argv[]*/)
 {
     std::cout << "Hello World!" << std::endl;
 
 //    testUInts();
 
-//    testSetOfPoints();
+    testSetOfPoints();
 
-    testGrid();
+//    testGrid();
 
     return 0;
 }
