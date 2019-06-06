@@ -218,7 +218,7 @@ public class MainDriver {
                 e.printStackTrace();
             }
             
-            GameGrid2D grid = new GameGrid2D(gridDimensions, 5, 7);
+            GameGrid2D grid = new GameGrid2D(gridDimensions, 1, 50);
             System.out.println("Grid #" + i + '\n' + grid + "\n\n");
         }
     }
